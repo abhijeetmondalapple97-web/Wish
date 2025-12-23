@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Merry Christmas Prixy</title>
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:Segoe UI, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+.page{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.active{
+  display:flex;
+}
+
+#intro{
+  font-size:2rem;
+  animation:fade 2s;
+}
+
+#heartBtn{
+  font-size:3.5rem;
+  cursor:pointer;
+  animation:pulse 1.3s infinite;
+}
+
+#final{
+  flex-direction:row;
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+#msg{
+  max-width:320px;
+  line-height:1.7;
+  font-size:1rem;
+}
+
+#tree{
+  position:relative;
+  width:320px;
+  height:420px;
+}
+
+#fall{
+  position:absolute;
+  top:-60px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:2.5rem;
+}
+
+#trunk{
+  position:absolute;
+  bottom:0;
+  left:50%;
+  width:18px;
+  height:0;
+  background:#f2b6c1;
+  transform:translateX(-50%);
+  border-radius:10px;
+  transition:height 1s ease;
+}
+
+.leaf{
+  position:absolute;
+  font-size:1.1rem;
+  opacity:0;
+  transition:opacity .8s;
+}
+
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+}
+
+@keyframes fall{
+  to{top:210px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page active">
+  <div id="intro">Hello Beautiful Prixy Angry Bird</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="page">
+  <div id="heartBtn">❤️</div>
+  <p>Click me for surprise</p>
+</div>
+
+<!-- PAGE 3 -->
+<div id="final" class="page">
+
+  <!-- MESSAGE -->
+  <div id="msg">
+    <p>Hey you 💝</p>
+    <p>Merry Christmas 🎄</p>
+    <p>May God bless you 🍀</p>
+    <p>And give you many happiness 💝</p>
+    <p>Just saying… you look pretty and awesome 💝</p>
+    <p>Sending good vibes and maybe a wink 😉</p>
+
+    <br>
+
+    <p><b>From</b><br>
+    That skeleton (now muscular 🤭)</p>
+
+    <br>
+
+    <p>Thank you Prixy 💝</p>
+  </div>
+
+  <!-- TREE -->
+  <div id="tree">
+    <div id="fall">❤️</div>
+    <div id="trunk"></div>
+  </div>
+
+</div>
+
+<script>
+// Auto move from page 1 to page 2
+setTimeout(()=>{
+  document.getElementById("p1").classList.remove("active");
+  document.getElementById("p2").classList.add("active");
+},2000);
+
+// On heart click
+document.getElementById("heartBtn").onclick = () => {
+  document.getElementById("p2").classList.remove("active");
+  document.getElementById("final").classList.add("active");
+  growTree();
+};
+
+function growTree(){
+  const fall = document.getElementById("fall");
+  const trunk = document.getElementById("trunk");
+  const tree = document.getElementById("tree");
+
+  fall.style.animation = "fall 1s forwards";
+
+  setTimeout(()=>{
+    trunk.style.height = "160px";
+  },800);
+
+  const hearts = ["💖","💗","💛","💜","🧡","💙"];
+
+  setTimeout(()=>{
+    for(let x=-9; x<=9; x++){
+      for(let y=-9; y<=9; y++){
+        const eq = (x*x + y*y - 1)**3 - x*x*y*y*y;
+        if(eq <= 0){
+          const leaf = document.createElement("div");
+          leaf.className = "leaf";
+          leaf.innerText = hearts[Math.floor(Math.random()*hearts.length)];
+          leaf.style.left = 160 + x*12 + "px";
+          leaf.style.top  = 140 + y*12 + "px";
+          tree.appendChild(leaf);
+          setTimeout(()=>leaf.style.opacity = 1, 50);
+        }
+      }
+    }
+  },1200);
+}
+</script>
+
+</body>
+</html>
